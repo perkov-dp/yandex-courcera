@@ -1,0 +1,22 @@
+void PrintMap (const map <int, string>& m)
+{
+	cout << "Size = " << m.size() << endl;
+	for (auto item : m)
+	{
+		cout << item.first << ": " << item.second << endl;
+	}
+}
+
+//	перернутый map
+map <string, int> BuildReversedMap (const map <int, string>& m)
+{
+	map <int, string> result;
+	for (auto item : m)
+	{
+		result[item.second] = item.first;
+	}
+	return result;
+}
+
+events[1950] = "Bjarne Stroustrup`s birth";	// на данный мом-т размер словаря = 1
+events.erase(1970);	//	удаление записи по ключу 1970

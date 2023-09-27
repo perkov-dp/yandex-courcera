@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+#include <map>
+#include <set>
+using namespace std;
+int main() {
+	int q; // считываем количество запросов
+	cin >> q;
+	
+	// храним словарь синонимов (для строки хранит множество всех её синонимов)
+	map <string , set <string >> synonyms;
+	for (int i = 0; i < q; ++i) { // обрабатываем запросы
+		string operation_code;
+		cin >> operation_code;
+		if (operation_code == "ADD") { // считываем две строки и добавляем в словарь
+			string first_word , second_word;
+			cin >> first_word >> second_word;
+			synonyms[second_word].insert(first_word);
+			synonyms[first_word].insert(second_word);
+		} else if (operation_code == "COUNT") { // считываем одну строку и выводим размер
+			string word;
+			cin >> word;
+			cout << synonyms[word].size() << endl;
+		} else if (operation_code == "CHECK") { // считываем два слова и проверяем
+			string first_word , second_word;
+			cin >> first_word >> second_word;
+			if (synonyms[first_word].count(second_word) == 1) {
+				cout << "YES" << endl;
+			} else {
+				cout << "NO" << endl;
+			}
+		}
+	}
+		
+	return 0;
+}

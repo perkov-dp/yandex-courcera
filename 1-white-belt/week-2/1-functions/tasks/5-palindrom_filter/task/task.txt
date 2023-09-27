@@ -1,0 +1,12 @@
+/*
+ * Ќапишите ф-ю, к-ра€ возвращает vector,
+ * принимает vector words и int minLength и возвращает все строки из вектора words,
+ * к-рые €вл€ютс€ палиндромами и имеют длину не меньше minLength.
+ * ¬ходной в-р содержит не более 100 строк, длина к-дой строкине больше 100 символов.
+ *
+ * “естовые данные:
+ * words			minLength	рез-т
+ * abacaba, aba		5			abacaba
+ * abacaba, aba		2			abacaba, aba
+ * weew, bro, code	4			weew
+ */
