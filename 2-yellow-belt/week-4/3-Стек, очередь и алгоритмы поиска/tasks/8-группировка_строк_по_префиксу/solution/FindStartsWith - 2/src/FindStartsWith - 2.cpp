@@ -1,0 +1,71 @@
+#include <iostream>
+#include <string>
+#include <utility>	//	pair
+#include <iterator>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+//	- принимает отсортированный набор строк в виде итераторов range_begin,
+//	range_end и один символ prefix;
+//	- возвращает диапазон строк, начинающихся с символа prefix,
+//	в виде пары итераторов.
+template <typename RandomIt>
+pair<RandomIt, RandomIt> FindStartsWith(
+    RandomIt range_begin, RandomIt range_end,
+	const string& prefix
+) {
+	/* Здесь исп-ся алгоитм equal_range ==
+	 * make_pair(lower_bound (...), upper_bound (...))
+	 * Рез-т equal_range = [lower_bound, upper_bound)
+	 * Т.к. upper_bound возвращает итератор на эл-т строго больший >,
+	 * а верхняя граница equal_range на <, то upper_bound д/указывать
+	 * на следующий эл-т, чтобы включить последний эл-т из заданного диапазона,
+	 * т.е. эл-т перед upper_bound
+	 *
+	 * Например
+	 * "moscow", "murmansk", "vologda"
+	 * lower_bound = moscow, upper_bound = murmansk
+	 * Диапазон возвращаемых значений - [moscow, murmansk) -> moscow
+	 * Поэтому upper_bound д/возвращать итератор на следующий эл-т,
+	 * к-рый не входит в возвращаемый диапазон.
+	 * Этот эл-т - следующая строка, первая буква к-рой нач-ся не с prefix.
+	 * Тогда Диапазон возвращаемых значений - [moscow, vologda) -> moscow, murmansk*/
+
+	/* Подсказка
+	 * К символам (char) можно прибавлять или вычитать числа, получая таким образом
+	 * следующие или предыдущие буквы в алфавитном порядке.
+	 * Например, для строки s выражение --s[0] заменит её первую букву на
+	 * предыдущую. */
+	//	next_string  - точная верхняя грань мн-ва строк, начинающихся с prefix
+	//	заменим последнюю букву на следующую, т.о. изменим префикс
+	string next_string = prefix;
+	++next_string[next_string.size() - 1];
+
+	//	string(1, prefix) преобразует char в строку для оператора <
+	return {lower_bound (range_begin, range_end, prefix),
+		upper_bound (range_begin, range_end, next_string)};
+}
+
+int main() {
+	const vector<string> sorted_strings = {"moscow", "motovilikha", "murmansk"};
+
+	const auto mo_result =
+	    FindStartsWith(begin(sorted_strings), end(sorted_strings), "mo");
+	for (auto it = mo_result.first; it != mo_result.second; ++it) {
+	  cout << *it << " ";
+	}
+	cout << endl;
+
+	const auto mt_result =
+	    FindStartsWith(begin(sorted_strings), end(sorted_strings), "mt");
+	cout << (mt_result.first - begin(sorted_strings)) << " " <<
+	    (mt_result.second - begin(sorted_strings)) << endl;
+
+	const auto na_result =
+	    FindStartsWith(begin(sorted_strings), end(sorted_strings), "na");
+	cout << (na_result.first - begin(sorted_strings)) << " " <<
+	    (na_result.second - begin(sorted_strings)) << endl;
+
+	return 0;
+}

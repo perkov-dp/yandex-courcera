@@ -10,8 +10,6 @@
 #include <algorithm>
 using namespace std;
 
-#include <regex>	//	регулярные выражения. Здесь НЕ ИСП-СЯ!!!!!!
-
 struct Day {
     int value;
     explicit Day(int new_value) {
