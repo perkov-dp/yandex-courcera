@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "stdexcept": "cpp",
+        "numeric": "cpp",
+        "future": "cpp"
+    }
+}
